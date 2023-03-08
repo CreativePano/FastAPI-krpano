@@ -12,16 +12,24 @@ class User(BaseModel):
     user_collection_list: list
 
 
-class UserLike(BaseModel):
-    user_id: str            # 外键合并主键
-    pano_id: list           # 外键合并主键
+class pano(BaseModel):
+    pano_id: str
+    pano_name: str
+    pano_publish_time: str
+    pano_publisher: str
+    pano_address: str
+    pano_img_list: list
+    pano_liker_list: list
+    pano_comment_list: list
 
 
-class UserPublish(BaseModel):
-    user_id: str            # 外键合并主键
-    pano_id: list           # 外键合并主键
+class img(BaseModel):
+    img: str
+    name: str
 
 
-class UserCollection(BaseModel):
-    user_id: str            # 外键合并主键
-    pano_id: list           # 外键合并主键
+class comment(BaseModel):
+    id: str
+    des: str
+    time: str
+    user_id: str
