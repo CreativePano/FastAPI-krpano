@@ -9,10 +9,10 @@ class User(BaseModel):
     user_like_num: int
     user_like_list: list
     user_publish_list: list
-    user_collection_list: list
+    # user_collection_list: list
 
 
-class pano(BaseModel):
+class Pano(BaseModel):
     pano_id: str
     pano_name: str
     pano_publish_time: str

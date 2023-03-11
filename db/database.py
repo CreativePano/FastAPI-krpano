@@ -10,6 +10,17 @@ def dao_add_user(user):
 def dao_get_user(user_id):
     return db.userList.find_one({'user_id': user_id})
 
-
 def dao_update_user(user):
     return db.userList.update_one({'user_id': user.user_id}, {'$set': user.dict()}).modified_count
+
+def dao_get_pano_list():
+    return list(db.panoList.find())
+
+def dao_add_pano(pano):
+    return db.panoList.insert_one(pano.dict()).inserted_id
+
+def dao_get_pano(pano_id):
+    return db.panoList.find_one({'pano_id': pano_id})
+
+def dao_update_pano(pano):
+    return db.panoList.update_one({'pano_id': pano.pano_id}, {'$set': pano.dict()}).modified_count
