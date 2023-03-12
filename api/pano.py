@@ -71,4 +71,3 @@ def pano_comment(id: str, des: str, time: str, user_id: str):
         return pano
     else:
         raise HTTPException(status_code=404, detail="Pano not found")
-

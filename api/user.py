@@ -5,6 +5,7 @@ from db import database
 
 router = APIRouter()
 
+
 @router.post("/addUser")
 def add_user(user: User):
     if database.dao_add_user(user):
@@ -16,6 +17,16 @@ def add_user(user: User):
 @router.get("/getUser/{user_id}")
 def get_user(user_id: str):
     user = database.dao_get_user(user_id)
+    user.pop('_id')
+    if user is not None:
+        return user
+    else:
+        raise HTTPException(status_code=404, detail="User not found")
+
+
+@router.get("/verifyUser/{user_name}")
+def verify_user(user_name: str):
+    user = database.dao_get_user_by_name(user_name)
     user.pop('_id')
     if user is not None:
         return user
