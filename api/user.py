@@ -24,14 +24,15 @@ def get_user(user_id: str):
         raise HTTPException(status_code=404, detail="User not found")
 
 
-@router.get("/verifyUser/{user_name}")
-def verify_user(user_name: str):
+@router.get("/login")
+def verify_user(user_name: str, user_password: str):
     user = database.dao_get_user_by_name(user_name)
-    user.pop('_id')
     if user is not None:
-        return user
-    else:
-        raise HTTPException(status_code=404, detail="User not found")
+        if user['user_password'] == user_password:
+            user.pop('_id')
+            return user
+        else:
+            raise HTTPException(status_code=401, detail="Unauthorized")
 
 
 @router.post("/updateUser")
