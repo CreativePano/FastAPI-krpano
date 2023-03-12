@@ -5,6 +5,7 @@ class User(BaseModel):
     user_id: str
     user_avatar: str
     user_name: str
+    user_password: str
     user_phone: str
     user_like_num: int
     user_like_list: list
