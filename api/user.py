@@ -8,7 +8,8 @@ router = APIRouter()
 
 @router.post("/addUser")
 def add_user(user: User):
-    if database.dao_add_user(user):
+    if database.dao_get_user_by_name(user.user_name) is None:
+        database.dao_add_user(user)
         return {"message": "User added"}
     else:
         raise HTTPException(status_code=400, detail="User already exists")
