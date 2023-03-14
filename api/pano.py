@@ -19,7 +19,8 @@ def get_pano_list():
 
 @router.post("/addPano")
 def add_pano(pano: Pano):
-    if database.dao_add_pano(pano):
+    if database.dao_get_pano(pano.pano_id) is None:
+        database.dao_add_pano(pano)
         user = database.dao_get_user(pano.pano_publisher)
         user.pop('_id')
         user['user_publish_list'].append(pano.pano_id)
@@ -42,17 +43,21 @@ def get_pano(pano_id: str):
 def pano_like(pano_id: str, user_id: str):
     pano = database.dao_get_pano(pano_id)
     pano.pop('_id')
+    publisher = database.dao_get_user(pano['pano_publisher'])
+    publisher.pop('_id')
+    liker = database.dao_get_user(user_id)
+    liker.pop('_id')
     if pano is not None:
         if user_id in pano['pano_liker_list']:
             pano['pano_liker_list'].remove(user_id)
+            publisher['user_like_num'] -= 1
+            database.dao_update_user(publisher)
+            liker['user_like_list'].remove(pano_id)
+            database.dao_update_user(liker)
         else:
             pano['pano_liker_list'].append(user_id)
-            publisher = database.dao_get_user(pano.pano_publisher)
-            publisher.pop('_id')
             publisher['user_like_num'] += 1
             database.dao_update_user(publisher)
-            liker = database.dao_get_user(user_id)
-            liker.pop('_id')
             liker['user_like_list'].append(pano_id)
             database.dao_update_user(liker)
         database.dao_update_pano(pano)
