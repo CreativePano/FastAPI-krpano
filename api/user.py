@@ -18,8 +18,8 @@ def add_user(user: User):
 @router.get("/getUser/{user_id}")
 def get_user(user_id: str):
     user = database.dao_get_user(user_id)
-    user.pop('_id')
     if user is not None:
+        user.pop('_id')
         return user
     else:
         raise HTTPException(status_code=404, detail="User not found")
