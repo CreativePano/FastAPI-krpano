@@ -1,6 +1,6 @@
 import pymongo
 
-mongo = pymongo.MongoClient('mongodb://192.168.1.103:27017/')
+mongo = pymongo.MongoClient('mongodb://localhost:27017/')
 db = mongo['krpano']
 
 
@@ -33,3 +33,6 @@ def dao_get_pano(pano_id):
 
 def dao_update_pano(pano):
     return db.panoList.update_one({'pano_id': pano['pano_id']}, {'$set': pano}).modified_count
+
+def dao_delete_pano(pano_id):
+    return db.panoList.delete_one({'pano_id': pano_id}).deleted_count

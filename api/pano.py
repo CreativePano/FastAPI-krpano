@@ -76,3 +76,16 @@ def pano_comment(id: str, des: str, time: str, user_id: str):
         return pano
     else:
         raise HTTPException(status_code=404, detail="Pano not found")
+
+@router.get("/deletePano")
+def delete_pano(pano_id: str, user_id: str):
+    pano = database.dao_get_pano(pano_id)
+    pano.pop('_id')
+    if pano is not None:
+        if pano['pano_publisher'] == user_id:
+            database.dao_delete_pano(pano_id)
+            return {"message": "Pano deleted"}
+        else:
+            raise HTTPException(status_code=401, detail="Unauthorized")
+    else:
+        raise HTTPException(status_code=404, detail="Pano not found")
