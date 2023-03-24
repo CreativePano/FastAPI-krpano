@@ -36,3 +36,7 @@ def dao_update_pano(pano):
 
 def dao_delete_pano(pano_id):
     return db.panoList.delete_one({'pano_id': pano_id}).deleted_count
+
+
+def dao_search_pano(find):
+    return list(db.panoList.find({'$or': [{'pano_name': {'$regex': find}}, {'pano_address': {'$regex': find}}]}))

@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, File, UploadFile
 
 from model import Pano
 from db import database
+from common import upload
 
 router = APIRouter()
 
@@ -10,7 +11,6 @@ router = APIRouter()
 def get_pano_list():
     pano_list = database.dao_get_pano_list()
     [pano.pop('_id') for pano in pano_list]
-    print(pano_list)
     if len(pano_list) > 0:
         return pano_list
     else:
@@ -89,3 +89,17 @@ def delete_pano(pano_id: str, user_id: str):
             raise HTTPException(status_code=401, detail="Unauthorized")
     else:
         raise HTTPException(status_code=404, detail="Pano not found")
+
+@router.get("/search")
+def search_pano(find: str):
+    pano_list = database.dao_search_pano(find)
+    [pano.pop('_id') for pano in pano_list]
+    if len(pano_list) > 0:
+        return pano_list
+    else:
+        raise HTTPException(status_code=404, detail="Pano not found")
+
+
+@router.post("/uploadImg")
+def upload_file(file: UploadFile = File(...)):
+    return upload.upload(file.read())
