@@ -20,10 +20,13 @@ def get_pano_list():
 @router.post("/addPano")
 def add_pano(pano: Pano):
     if database.dao_get_pano(pano.pano_id) is None:
-        database.dao_add_pano(pano)
         user = database.dao_get_user(pano.pano_publisher)
-        user.pop('_id')
-        user['user_publish_list'].append(pano.pano_id)
+        if user is not None:
+            user.pop('_id')
+            user['user_publish_list'].append(pano.pano_id)
+            database.dao_add_pano(pano)
+        else:
+            raise HTTPException(status_code=404, detail="User not found")
         return {"message": "Pano added"}
     else:
         raise HTTPException(status_code=400, detail="Pano already exists")
@@ -98,8 +101,3 @@ def search_pano(find: str):
         return pano_list
     else:
         raise HTTPException(status_code=404, detail="Pano not found")
-
-
-@router.post("/uploadImg")
-def upload_file(file: UploadFile = File(...)):
-    return upload.upload(file.read())
