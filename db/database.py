@@ -16,8 +16,7 @@ def dao_get_user_by_name(user_name):
     return db.userList.find_one({'user_name': user_name})
 
 def dao_update_user(user):
-    ud = user.dict()
-    return db.userList.update_one({'user_id': ud['user_id']}, {'$set': ud}).modified_count
+    return db.userList.update_one({'user_id': user['user_id']}, {'$set': user}).modified_count
 
 
 def dao_get_pano_list():
