@@ -10,17 +10,16 @@ router = APIRouter()
 @router.post("/applyFilter/{filtername}")
 def apply_filter(filtername: str, pano: Pano, index: int):
     pano_pic = base64.b64encode(requests.get(pano.pano_img_list[index]).content)
-    match filtername:
-        case "MovieOrange":
-            return {"pano_img": filter_image_two(pano_pic)}
-        case "Kameel":
-            return {"pano_img": filter_image_three(pano_pic)}
-        case "Aomori":
-            return {"pano_img": filter_image_four(pano_pic)}
-        case "SouthFrance":
-            return {"pano_img": filter_image_five(pano_pic)}
+    if filtername == "MovieOrange":
+        return {"pano_img": filter_image_two(pano_pic)}
+    elif filtername == "Kameel":
+        return {"pano_img": filter_image_three(pano_pic)}
+    elif filtername == "Aomori":
+        return {"pano_img": filter_image_four(pano_pic)}
+    elif filtername == "SouthFrance":
+        return {"pano_img": filter_image_five(pano_pic)}
 
 @router.post("/diy")
-def diy_filter(pano: Pano, index: int, brightness: int, contrast: int, saturation: int, temp: int, tint: int):
+def diy_filter(pano: Pano, index: int, brightness: int, saturation: int, temp: int, tint: int):
     pano_pic = base64.b64encode(requests.get(pano.pano_img_list[index]).content)
-    return {"pano_img": filter_image_one(pano_pic)}
+    return {"pano_img": filter_image_one(pano_pic, brightness, saturation, temp, tint)}
