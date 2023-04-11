@@ -38,6 +38,8 @@ def verify_user(user_name: str, user_password: str):
 
 @router.post("/updateUser")
 def update_user(user: User):
+    user = dict(user)
+    print(user)
     if database.dao_update_user(user) == 1:
         return {"message": "User updated"}
     else:

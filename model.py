@@ -22,6 +22,7 @@ class Pano(BaseModel):
     pano_img_list: list
     pano_liker_list: list
     pano_comment_list: list
+    pano_hotspots: list
 
 
 class img(BaseModel):

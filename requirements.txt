@@ -4,3 +4,6 @@ uvicorn~=0.20.0
 starlette~=0.22.0
 pydantic~=1.10.4
 requests
+opencv-python
+numpy
+pillow

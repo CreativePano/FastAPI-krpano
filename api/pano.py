@@ -2,7 +2,6 @@ from fastapi import APIRouter, HTTPException, File, UploadFile
 
 from model import Pano
 from db import database
-from common import upload
 
 router = APIRouter()
 
@@ -99,5 +98,17 @@ def search_pano(find: str):
     [pano.pop('_id') for pano in pano_list]
     if len(pano_list) > 0:
         return pano_list
+    else:
+        raise HTTPException(status_code=404, detail="Pano not found")
+
+
+@router.post("/hotspots")
+def rebuild_hotspots(pano_id: str, hotspots: list):
+    pano = database.dao_get_pano(pano_id)
+    if pano is not None:
+        pano.pop('_id')
+        pano['pano_hotspots'] = hotspots
+        database.dao_update_pano(pano)
+        return pano
     else:
         raise HTTPException(status_code=404, detail="Pano not found")
