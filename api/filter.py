@@ -9,7 +9,8 @@ router = APIRouter()
 
 @router.post("/applyFilter/{filtername}")
 def apply_filter(filtername: str, pano: Pano, index: int):
-    pano_pic = base64.b64encode(requests.get(pano.pano_img_list[index]).content)
+    pano_url = "https://oss.jetlab.live" + pano.pano_img_list[index]
+    pano_pic = base64.b64encode(requests.get(pano_url).content)
     if filtername == "MovieOrange":
         return {"pano_img": filter_image_two(pano_pic)}
     elif filtername == "Kameel":
