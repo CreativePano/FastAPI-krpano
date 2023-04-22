@@ -83,8 +83,6 @@ def filter_image_three(base64_str):
     # 将 numpy 数组转换为 opencv 图像对象
     img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
 
-
-    cv2.waitKey(0)
     img = np.array(img)
 
     # 定义卡梅尔滤镜的参数
