@@ -21,5 +21,4 @@ app.include_router(api_router)
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app="main:app", host="0.0.0.0", port=443, reload=True,
-                ssl_keyfile="./maxin.key", ssl_certfile="./maxinfull.crt")
+    uvicorn.run(app="main:app", host="0.0.0.0", port=8000, reload=True)

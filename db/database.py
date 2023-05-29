@@ -1,6 +1,6 @@
 import pymongo
 
-mongo = pymongo.MongoClient('mongodb://net6.takina.live:27017/')
+mongo = pymongo.MongoClient('mongodb://takina.live:27017/')
 db = mongo['krpano']
 
 
